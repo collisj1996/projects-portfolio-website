@@ -107,11 +107,12 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   position: relative;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 #landing-section {
   background-color: var(--primary-color);
-  height: 100vh;
 }
 
 #landing-content-container {
@@ -153,7 +154,6 @@ export default defineComponent({
 
 #about-section {
   background-color: var(--secondary-color);
-  height: 100vh;
 }
 
 #about-left {
@@ -199,6 +199,7 @@ export default defineComponent({
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  max-width: 100vw;
 }
 
 #about-photo {
@@ -209,7 +210,6 @@ export default defineComponent({
 
 #projects-section {
   background-color: var(--tertiary-color);
-  min-height: 100vh;
 }
 
 #projects-section-inner {

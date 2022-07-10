@@ -4,6 +4,13 @@ import { defineComponent, reactive, toRefs } from 'vue';
 export default defineComponent({
   name: 'ProjectList',
   setup() {
+    // eslint-disable-next-line no-shadow
+    enum ProjectStatus {
+      Ongoing = 'Ongoing',
+      Inactive = 'Inactive',
+      Finished = 'Finished',
+    }
+
     interface Project {
       name: string;
       description: string[];
@@ -11,6 +18,8 @@ export default defineComponent({
       githubLink: string;
       demoLink: string;
       pageLink: string;
+      status: ProjectStatus;
+      tags: string[];
     }
 
     const state = reactive({
@@ -19,12 +28,27 @@ export default defineComponent({
           name: 'Algo Sandbox',
           description: [
             'A visual sandbox to test path finding algorithms and more...',
-            'Currently still under development',
+            'An ongoing project',
           ],
           image: 'algo-sandbox.png',
           githubLink: 'https://github.com/collisj1996/algo-sandbox',
           demoLink: '',
           pageLink: '',
+          status: ProjectStatus.Ongoing,
+          tags: ['JavaScript', 'TypeScript', 'Vue 3', 'Composition API', 'Alogrithms', 'Pathfinding', 'Visualization'],
+        },
+        {
+          name: 'Portfolio',
+          description: [
+            'High quality, responsive, and user-friendly portfolio website',
+            'An ongoing project',
+          ],
+          image: '',
+          githubLink: '',
+          demoLink: '',
+          pageLink: '',
+          status: ProjectStatus.Ongoing,
+          tags: ['JavaScript', 'TypeScript', 'Vue 3', 'Composition API', 'UI', 'UX', 'Responsive'],
         },
         {
           name: 'Minecraft Server Hub',
@@ -38,6 +62,8 @@ export default defineComponent({
           githubLink: 'https://github.com/collisj1996/minecraft-server-hub-frontend',
           demoLink: '',
           pageLink: '',
+          status: ProjectStatus.Finished,
+          tags: ['JavaScript', 'Vue 2', 'Vuex', 'Full Stack', 'Serverless', 'AWS', 'MySQL', 'SQS', 'EC2', 'NodeJS', 'Lambda', 'RDS'],
         },
         {
           name: 'Game of Life',
@@ -46,6 +72,8 @@ export default defineComponent({
           githubLink: 'https://github.com/collisj1996/Game-of-Life',
           demoLink: 'https://collisj1996.github.io/Game-of-Life/',
           pageLink: '',
+          status: ProjectStatus.Finished,
+          tags: ['JavaScript', 'Algorithms', 'MVC', 'Visualization'],
         },
         {
           name: 'Raycasting',
@@ -54,6 +82,8 @@ export default defineComponent({
           githubLink: 'https://github.com/collisj1996/Raycasting',
           demoLink: 'https://collisj1996.github.io/Raycasting/',
           pageLink: '',
+          status: ProjectStatus.Finished,
+          tags: ['JavaScript', 'Algorithms', 'Interactive', 'Visualization'],
         },
         {
           name: 'Memory Jar',
@@ -62,6 +92,8 @@ export default defineComponent({
           githubLink: 'https://github.com/collisj1996/MemoryJar',
           demoLink: '',
           pageLink: '',
+          status: ProjectStatus.Finished,
+          tags: ['Java', 'Android', 'Mobile'],
         },
         {
           name: 'Conversion Toolkit',
@@ -72,6 +104,8 @@ export default defineComponent({
           githubLink: 'https://github.com/collisj1996/Unit-Conversion-Tool',
           demoLink: 'https://play.google.com/store/apps/details?id=com.arcticumi.Conversion_Toolkit&hl=en_US',
           pageLink: '',
+          status: ProjectStatus.Finished,
+          tags: ['Java', 'Android', 'Mobile'],
         },
       ] as Project[],
       isHovering: false,
@@ -95,7 +129,7 @@ export default defineComponent({
   <div class="project-card" v-for="(project, index)
     of projects" :key="index">
     <div class="project-card-content">
-      <div class="project-card-name">{{ project.name }}</div>
+      <div class="project-card-name">{{ project.name }} | {{ project.status }}</div>
       <div class="project-card-description">
         <div class="project-card-paragraph" v-for="(paragraph, index) of project.description"
           :key="index">
@@ -113,8 +147,13 @@ export default defineComponent({
           <img src="https://img.icons8.com/color/48/000000/play.png" alt="Demo" />
         </a>
       </div>
+      <div class="project-tags">
+        <div class="project-tag" v-for="(tag, index) of project.tags" :key="index">
+          {{ tag }}
+        </div>
+      </div>
     </div>
-    <img class="project-card-image" alt="" :src="getImage(project.image)">
+    <img v-if="project.image" class="project-card-image" alt="" :src="getImage(project.image)">
   </div>
 </template>
 
@@ -127,11 +166,18 @@ export default defineComponent({
   background: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   padding: 1rem;
-  margin-bottom: 3rem;
   position: relative;
+  max-width: 1200px;
+  margin: 0 auto 3rem auto;
+}
+
+.project-card:hover {
+  transform: scale(1.2);
+  z-index: 222222;
 }
 
 .project-card-name {
+  display: flex;
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
@@ -199,5 +245,22 @@ export default defineComponent({
 
 .projects-links a img {
   margin-left: 0.5rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.project-tag {
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+  color: white;
+  background: rgb(53, 53, 53);
 }
 </style>
