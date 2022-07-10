@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import ProjectList from '@/components/ProjectList.vue';
+import NameTypographySvg from '../components/NameTypographySvg.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -26,7 +27,6 @@ export default defineComponent({
       document.addEventListener('scroll', () => {
         const { scrollTop } = document.documentElement;
         const aboutSection = document.getElementById('about-section') as HTMLElement;
-        const landingSection = document.getElementById('landing-section') as HTMLElement;
         const projectsSection = document.getElementById('projects-section') as HTMLElement;
 
         // Scrolled past the landing section
@@ -78,24 +78,17 @@ export default defineComponent({
           this.upTargetOffset = document.getElementById('about-section')?.offsetHeight as number;
           document.getElementById('scroll-button-down')?.classList.add('hide-scroll-button');
         }
-        // isScrolling = setTimeout(() => {
-        //   scrollClicked = false;
-        //   document.getElementById('scroll-button-up')?.classList.remove('hide');
-        //   if (this.scrollDownCount >= 2) {
-        //     document.getElementById('scroll-button-down')?.classList.add('hide');
-        //   }
-        // }, 66);
       });
     },
   },
-  components: { ProjectList },
+  components: { ProjectList, NameTypographySvg },
 });
 </script>
 
 <template>
   <section id="landing-section">
     <div id="landing-content-container">
-      <img alt="Jack Collis" src="../assets/name-typography.png">
+      <NameTypographySvg />
       <div id="landing-subheading">{{ landingSubheadingText }}</div>
       <div id="social-container">
         <a href="https://github.com/collisj1996">
