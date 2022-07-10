@@ -10,6 +10,7 @@ export default defineComponent({
       image: string;
       githubLink: string;
       demoLink: string;
+      pageLink: string;
     }
 
     const state = reactive({
@@ -23,6 +24,7 @@ export default defineComponent({
           image: 'algo-sandbox.png',
           githubLink: 'https://github.com/collisj1996/algo-sandbox',
           demoLink: '',
+          pageLink: '',
         },
         {
           name: 'Minecraft Server Hub',
@@ -35,6 +37,7 @@ export default defineComponent({
           image: 'msh.png',
           githubLink: 'https://github.com/collisj1996/minecraft-server-hub-frontend',
           demoLink: '',
+          pageLink: '',
         },
         {
           name: 'Game of Life',
@@ -42,6 +45,7 @@ export default defineComponent({
           image: 'game-of-life.png',
           githubLink: 'https://github.com/collisj1996/Game-of-Life',
           demoLink: 'https://collisj1996.github.io/Game-of-Life/',
+          pageLink: '',
         },
         {
           name: 'Raycasting',
@@ -49,33 +53,28 @@ export default defineComponent({
           image: 'raycasting.png',
           githubLink: 'https://github.com/collisj1996/Raycasting',
           demoLink: 'https://collisj1996.github.io/Raycasting/',
+          pageLink: '',
         },
         {
           name: 'Memory Jar',
           description: ['An android based mobile application developed to help people with dementia to remember things, based on the premise of positive reminiscemence.'],
-          image: 'algo-sandbox.png',
+          image: 'memory-jar.png',
           githubLink: 'https://github.com/collisj1996/MemoryJar',
           demoLink: '',
+          pageLink: '',
         },
         {
           name: 'Conversion Toolkit',
           description: [
             'The Conversion Toolkit mobile application for Android provides users with an easy-to-use "toolkit" for day to day conversions. Whether you are trying to convert Kilometers to Miles, understand the amount of Electronvolts in a Joule or see how many Indian Rupees you can get for 50 British Pounds, Conversion Toolkit can do it all',
           ],
-          image: 'algo-sandbox.png',
+          image: 'conversion-toolkit.png',
           githubLink: 'https://github.com/collisj1996/Unit-Conversion-Tool',
           demoLink: 'https://play.google.com/store/apps/details?id=com.arcticumi.Conversion_Toolkit&hl=en_US',
-        },
-        {
-          name: 'Calculator',
-          description: [
-            'A simple calculator application that can perform basic arithmetic operations.',
-          ],
-          image: 'algo-sandbox.png',
-          githubLink: 'https://github.com/collisj1996/Calculator',
-          demoLink: 'https://play.google.com/store/apps/details?id=com.arcticumi.calculator&hl=en_GB',
+          pageLink: '',
         },
       ] as Project[],
+      isHovering: false,
     });
 
     return { ...toRefs(state) };
@@ -93,8 +92,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="getProjectCardClass(index)" class="project-card" v-for="(project, index) of projects"
-    :key="index">
+  <div class="project-card" v-for="(project, index)
+    of projects" :key="index">
     <div class="project-card-content">
       <div class="project-card-name">{{ project.name }}</div>
       <div class="project-card-description">
@@ -122,10 +121,9 @@ export default defineComponent({
 <style scoped>
 .project-card {
   display: flex;
+  flex: 1 1 50%;
   flex-direction: row;
   height: fit-content;
-  width: 80%;
-  max-width: 800px;
   background: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   padding: 1rem;

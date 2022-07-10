@@ -238,4 +238,10 @@ export default defineComponent({
   max-width: 32px;
   margin: 0 10px
 }
+
+@media screen and (max-width: 1000px) {
+  #about-content {
+    flex-direction: column;
+  }
+}
 </style>
