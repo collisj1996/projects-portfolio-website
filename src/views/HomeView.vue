@@ -10,6 +10,9 @@ export default defineComponent({
       aboutTitle: 'About' as string,
       aboutSubheadingText: 'I\'m a career-driven and personable individual always looking to develop my portfolio of skills and experience. I have a bachelor\'s degree in Computer Science which has afforded me a solid understanding of computer theory; building upon this is my years working in the industry which has further developed my understanding into practical skills and knowledge.' as string,
       projectsTitle: 'Projects' as string,
+      upTargetOffset: 0 as number,
+      downTargetOffset: 0 as number,
+      scrollDownCount: 0 as number,
     });
     return { ...toRefs(state) };
   },
@@ -18,34 +21,70 @@ export default defineComponent({
   },
   methods: {
     setupScrollButtons() {
-      const landingScrollDown = document.getElementById('landing-section-scroll-down') as HTMLElement;
-      const aboutScrollUp = document.getElementById('about-section-scroll-up') as HTMLElement;
-      const aboutScrollDown = document.getElementById('about-section-scroll-down') as HTMLElement;
-      const projectsScrollUp = document.getElementById('projects-section-scroll-up') as HTMLElement;
-      const aboutSection = document.getElementById('about-section') as HTMLElement;
-      landingScrollDown.addEventListener('click', () => {
-        window.scrollTo({
-          top: aboutSection.offsetHeight,
-          behavior: 'smooth',
-        });
+      this.downTargetOffset = document.getElementById('about-section')?.offsetHeight as number;
+
+      document.addEventListener('scroll', () => {
+        const { scrollTop } = document.documentElement;
+        const aboutSection = document.getElementById('about-section') as HTMLElement;
+        const landingSection = document.getElementById('landing-section') as HTMLElement;
+        const projectsSection = document.getElementById('projects-section') as HTMLElement;
+
+        // Scrolled past the landing section
+        if (scrollTop >= aboutSection.offsetTop) {
+          document.getElementById('scroll-button-up')?.classList.remove('hide');
+          this.upTargetOffset = 0;
+          this.downTargetOffset = projectsSection.offsetTop;
+        } else {
+          // bug here
+          document.getElementById('scroll-button-up')?.classList.add('hide');
+          this.downTargetOffset = aboutSection.offsetTop;
+        }
+
+        // Scrolled past the about section
+        if (scrollTop >= projectsSection.offsetTop) {
+          document.getElementById('scroll-button-down')?.classList.add('hide');
+          this.upTargetOffset = aboutSection.offsetTop;
+          // bug here
+        } else {
+          document.getElementById('scroll-button-down')?.classList.remove('hide');
+        }
+
+        if (this.scrollDownCount === 2) {
+          this.upTargetOffset = document.getElementById('about-section')?.offsetHeight as number;
+        }
       });
-      aboutScrollUp.addEventListener('click', () => {
+
+      const scrollButtonUp = document.getElementById('scroll-button-up') as HTMLElement;
+      const scrollButtonDown = document.getElementById('scroll-button-down') as HTMLElement;
+
+      scrollButtonUp.addEventListener('click', () => {
+        this.scrollDownCount -= 1;
         window.scrollTo({
-          top: 0,
+          top: this.upTargetOffset,
           behavior: 'smooth',
         });
+        if (this.scrollDownCount < 2) {
+          document.getElementById('scroll-button-down')?.classList.remove('hide-scroll-button');
+        }
       });
-      aboutScrollDown.addEventListener('click', () => {
+
+      scrollButtonDown.addEventListener('click', () => {
+        this.scrollDownCount += 1;
         window.scrollTo({
-          top: 2 * aboutSection.offsetHeight,
+          top: this.downTargetOffset,
           behavior: 'smooth',
         });
-      });
-      projectsScrollUp.addEventListener('click', () => {
-        window.scrollTo({
-          top: aboutSection.offsetHeight,
-          behavior: 'smooth',
-        });
+        if (this.scrollDownCount === 2) {
+          this.upTargetOffset = document.getElementById('about-section')?.offsetHeight as number;
+          document.getElementById('scroll-button-down')?.classList.add('hide-scroll-button');
+        }
+        // isScrolling = setTimeout(() => {
+        //   scrollClicked = false;
+        //   document.getElementById('scroll-button-up')?.classList.remove('hide');
+        //   if (this.scrollDownCount >= 2) {
+        //     document.getElementById('scroll-button-down')?.classList.add('hide');
+        //   }
+        // }, 66);
       });
     },
   },
@@ -67,14 +106,8 @@ export default defineComponent({
         </a>
       </div>
     </div>
-    <img id="landing-section-scroll-down" class="scroll-button" alt="Landing Down"
-      src="../assets/icons8-down-arrow-64.png">
   </section>
   <section id="about-section">
-    <img id="about-section-scroll-up" class="scroll-button" alt="Landing Down"
-      src="../assets/icons8-up-arrow-64.png">
-    <img id="about-section-scroll-down" class="scroll-button" alt="Landing Down"
-      src="../assets/icons8-down-arrow-64.png">
     <div id="about-content-container">
       <div id="about-heading">{{ aboutTitle }}</div>
       <div id="about-content">
@@ -92,13 +125,15 @@ export default defineComponent({
     </div>
   </section>
   <section id="projects-section">
-    <img id="projects-section-scroll-up" class="scroll-button" alt="Landing Down"
-      src="../assets/icons8-up-arrow-64.png">
     <div class="absolute-title">{{ projectsTitle }}</div>
     <div id="projects-section-inner">
       <ProjectList />
     </div>
   </section>
+  <img id="scroll-button-up" class="scroll-button hide" alt="Scroll Up"
+        src="../assets/icons8-up-arrow-64.png">
+  <img id="scroll-button-down" class="scroll-button" alt="Scroll Down"
+        src="../assets/icons8-down-arrow-64.png">
 </template>
 
 <style scoped>
@@ -135,16 +170,27 @@ export default defineComponent({
   top: 20px;
 }
 
+#scroll-button-up {
+  top: 20px;
+}
+
+#scroll-button-down {
+  bottom: 20px;
+}
+
 .scroll-button {
-  position: absolute;
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.5rem;
   font-weight: bold;
   color: #fff;
+  background: rgba(255, 255, 255, 0.178);
   cursor: pointer;
   text-decoration: none;
   padding: 5px;
+  z-index: 999999;
+  border-radius: 50%;
 }
 
 .scroll-button:hover {
@@ -189,7 +235,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin: 0 10%;
+  margin: 100px;
   min-width: 500px;
 }
 
@@ -237,6 +283,14 @@ export default defineComponent({
 .button-social {
   max-width: 32px;
   margin: 0 10px
+}
+
+.hide {
+  display: none;
+}
+
+.hide-scroll-button {
+  display: none;
 }
 
 @media screen and (max-width: 1000px) {

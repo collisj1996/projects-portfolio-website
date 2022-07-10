@@ -108,15 +108,11 @@ export default defineComponent({
           tags: ['Java', 'Android', 'Mobile'],
         },
       ] as Project[],
-      isHovering: false,
     });
 
     return { ...toRefs(state) };
   },
   methods: {
-    getProjectCardClass(index: number) {
-      return index % 2 === 0 ? 'project-card-left' : 'project-card-right';
-    },
     getImage(imageUrl: string) {
       // eslint-disable-next-line import/no-dynamic-require, global-require
       return require(`@/assets/${imageUrl}`);
@@ -172,8 +168,6 @@ export default defineComponent({
 }
 
 .project-card:hover {
-  transform: scale(1.2);
-  z-index: 222222;
 }
 
 .project-card-name {
@@ -202,14 +196,6 @@ export default defineComponent({
   object-fit: cover;
   margin-left: 1rem;
   align-self: center;
-}
-
-.project-card-left {
-  margin-right: auto;
-}
-
-.project-card-right {
-  margin-left: auto;
 }
 
 #current-project-image {
@@ -262,5 +248,11 @@ export default defineComponent({
   white-space: nowrap;
   color: white;
   background: rgb(53, 53, 53);
+}
+
+@media (max-width: 880px) {
+  .project-card-image {
+    display: none;
+  }
 }
 </style>
