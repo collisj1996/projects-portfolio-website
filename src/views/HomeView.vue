@@ -3,8 +3,7 @@
 import anime from 'animejs/lib/anime.es.js';
 import { defineComponent, reactive, toRefs } from 'vue';
 import ProjectList from '@/components/ProjectList.vue';
-import NameTypographySvg from '../components/NameTypographySvg.vue';
-import NameTypoBothSvg from '../components/NameTypoBothSvg.vue';
+import NameTypographyStrokeSvg from '../components/NameTypographyStrokeSvg.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -22,6 +21,15 @@ export default defineComponent({
   },
   mounted() {
     this.setupScrollButtons();
+    anime({
+      targets: '#stroke-svg path',
+      strokeDashoffset: [anime.setDashoffset, 0],
+      easing: 'easeInOutSine',
+      duration: 1500,
+      delay(e: HTMLElement, i: number) { return i * 300; },
+      direction: 'alternate',
+      loop: false,
+    });
   },
   methods: {
     setupScrollButtons() {
@@ -84,7 +92,10 @@ export default defineComponent({
       });
     },
   },
-  components: { ProjectList, NameTypographySvg, NameTypoBothSvg },
+  components: {
+    ProjectList,
+    NameTypographyStrokeSvg,
+  },
 });
 </script>
 
@@ -94,6 +105,7 @@ export default defineComponent({
       <div id="landing-content-container">
         <NameTypographySvg />
         <NameTypoBothSvg />
+        <NameTypographyStrokeSvg />
         <div id="landing-subheading">{{ landingSubheadingText }}</div>
         <div id="social-container">
           <a href="https://github.com/collisj1996">
