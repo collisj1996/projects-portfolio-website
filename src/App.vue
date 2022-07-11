@@ -2,6 +2,17 @@
   <router-view/>
 </template>
 
+<script>
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'App',
+  mounted() {
+    document.title = 'Jack Collis Developer';
+  },
+});
+</script>
+
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
@@ -24,6 +35,10 @@
   --primary-color: #b7e4c7;
   --secondary-color: #95d5b2;
   --tertiary-color: #74c69d;
+}
+
+* {
+  text-align: left;
 }
 
 body {

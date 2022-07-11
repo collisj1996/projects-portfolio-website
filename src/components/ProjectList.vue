@@ -28,7 +28,6 @@ export default defineComponent({
           name: 'Algo Sandbox',
           description: [
             'A visual sandbox to test path finding algorithms and more...',
-            'An ongoing project',
           ],
           image: 'algo-sandbox.png',
           githubLink: 'https://github.com/collisj1996/algo-sandbox',
@@ -40,8 +39,7 @@ export default defineComponent({
         {
           name: 'Portfolio',
           description: [
-            'High quality, responsive, and user-friendly portfolio website',
-            'An ongoing project',
+            'High quality, responsive, and user-friendly portfolio website.',
           ],
           image: '',
           githubLink: '',
@@ -67,7 +65,7 @@ export default defineComponent({
         },
         {
           name: 'Game of Life',
-          description: ['A recreation of Conway\'s Game of Life in Javscript'],
+          description: ['A recreation of Conway\'s Game of Life in Javscript.'],
           image: 'game-of-life.png',
           githubLink: 'https://github.com/collisj1996/Game-of-Life',
           demoLink: 'https://collisj1996.github.io/Game-of-Life/',
@@ -77,7 +75,7 @@ export default defineComponent({
         },
         {
           name: 'Raycasting',
-          description: ['A visualisation of a simple 2D "raycasting" algorithm'],
+          description: ['A visualisation of a simple 2D "raycasting" algorithm.'],
           image: 'raycasting.png',
           githubLink: 'https://github.com/collisj1996/Raycasting',
           demoLink: 'https://collisj1996.github.io/Raycasting/',
@@ -87,7 +85,7 @@ export default defineComponent({
         },
         {
           name: 'Memory Jar',
-          description: ['An android based mobile application developed to help people with dementia to remember things, based on the premise of positive reminiscemence.'],
+          description: ['An android based mobile application developed to help people with dementia to remember things, based on the premise of positive reminiscence.'],
           image: 'memory-jar.png',
           githubLink: 'https://github.com/collisj1996/MemoryJar',
           demoLink: '',
@@ -98,7 +96,7 @@ export default defineComponent({
         {
           name: 'Conversion Toolkit',
           description: [
-            'The Conversion Toolkit mobile application for Android provides users with an easy-to-use "toolkit" for day to day conversions. Whether you are trying to convert Kilometers to Miles, understand the amount of Electronvolts in a Joule or see how many Indian Rupees you can get for 50 British Pounds, Conversion Toolkit can do it all',
+            'The Conversion Toolkit mobile application for Android provides users with an easy-to-use "toolkit" for day to day conversions. Whether you are trying to convert Kilometers to Miles, understand the amount of Electronvolts in a Joule or see how many Indian Rupees you can get for 50 British Pounds, Conversion Toolkit can do it all.',
           ],
           image: 'conversion-toolkit.png',
           githubLink: 'https://github.com/collisj1996/Unit-Conversion-Tool',
@@ -117,6 +115,18 @@ export default defineComponent({
       // eslint-disable-next-line import/no-dynamic-require, global-require
       return require(`@/assets/${imageUrl}`);
     },
+    getStatusClass(status: string) {
+      switch (status) {
+        case 'Ongoing':
+          return 'status-ongoing';
+        case 'Inactive':
+          return 'status-inactive';
+        case 'Finished':
+          return 'status-finished';
+        default:
+          return '';
+      }
+    },
   },
 });
 </script>
@@ -125,7 +135,12 @@ export default defineComponent({
   <div class="project-card" v-for="(project, index)
     of projects" :key="index">
     <div class="project-card-content">
-      <div class="project-card-name">{{ project.name }} | {{ project.status }}</div>
+      <div class="project-card-name">
+        {{ project.name }}
+        <div :class="getStatusClass(project.status)" class="project-card-status">
+          {{ project.status }}
+        </div>
+      </div>
       <div class="project-card-description">
         <div class="project-card-paragraph" v-for="(paragraph, index) of project.description"
           :key="index">
@@ -135,12 +150,12 @@ export default defineComponent({
       <div class="project-links">
         <a :href="project.githubLink" target="_blank" rel="noopener noreferrer">
           Project Code
-          <img src="https://img.icons8.com/color/48/000000/github.png" alt="Github" />
+          <img class="project-link" src="https://img.icons8.com/color/48/000000/github.png" alt="Github" />
         </a>
         <a v-if="project.demoLink" :href="project.demoLink" target="_blank"
           rel="noopener noreferrer">
           Project Demo
-          <img src="https://img.icons8.com/color/48/000000/play.png" alt="Demo" />
+          <img class="project-link" src="https://img.icons8.com/color/48/000000/play.png" alt="Demo" />
         </a>
       </div>
       <div class="project-tags">
@@ -160,10 +175,9 @@ export default defineComponent({
   flex-direction: row;
   height: fit-content;
   background: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: rgb(9 30 66 / 25%) 0px 4px 8px -2px, rgb(9 30 66 / 8%) 0px 0px 0px 1px;
   padding: 1rem;
   position: relative;
-  max-width: 1200px;
   margin: 0 auto 3rem auto;
 }
 
@@ -227,6 +241,10 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid silver;
+  border-radius: 5px;
+  width: fit-content;
 }
 
 .projects-links a img {
@@ -248,6 +266,34 @@ export default defineComponent({
   white-space: nowrap;
   color: white;
   background: rgb(53, 53, 53);
+}
+
+.project-card-status {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+}
+
+.status-ongoing {
+  width: fit-content;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  background: rgb(223, 202, 83);
+}
+
+.status-inactive {
+  background: rgb(0, 0, 0);
+}
+
+.status-finished {
+  width: fit-content;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  background: rgb(75, 214, 47);
+}
+
+.project-link {
+  margin-left: 0.5rem;
 }
 
 @media (max-width: 880px) {

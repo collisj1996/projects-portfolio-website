@@ -1,7 +1,10 @@
 <script lang="ts">
+// eslint-disable-next-line import/extensions
+import anime from 'animejs/lib/anime.es.js';
 import { defineComponent, reactive, toRefs } from 'vue';
 import ProjectList from '@/components/ProjectList.vue';
 import NameTypographySvg from '../components/NameTypographySvg.vue';
+import NameTypoBothSvg from '../components/NameTypoBothSvg.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -81,46 +84,53 @@ export default defineComponent({
       });
     },
   },
-  components: { ProjectList, NameTypographySvg },
+  components: { ProjectList, NameTypographySvg, NameTypoBothSvg },
 });
 </script>
 
 <template>
   <section id="landing-section">
-    <div id="landing-content-container">
-      <NameTypographySvg />
-      <div id="landing-subheading">{{ landingSubheadingText }}</div>
-      <div id="social-container">
-        <a href="https://github.com/collisj1996">
-          <img class="button-social" alt="Github Social" src="../assets/GitHub-Mark-64px.png" >
-        </a>
-        <a href="https://www.linkedin.com/in/jack-collis-developer/">
-          <img class="button-social" alt="LinkedIn Social" src="../assets/linked-in.png" >
-        </a>
+    <div class="section-content">
+      <div id="landing-content-container">
+        <NameTypographySvg />
+        <NameTypoBothSvg />
+        <div id="landing-subheading">{{ landingSubheadingText }}</div>
+        <div id="social-container">
+          <a href="https://github.com/collisj1996">
+            <img class="button-social" alt="Github Social" src="../assets/GitHub-Mark-64px.png" >
+          </a>
+          <a href="https://www.linkedin.com/in/jack-collis-developer/">
+            <img class="button-social" alt="LinkedIn Social" src="../assets/linked-in.png" >
+          </a>
+        </div>
       </div>
     </div>
   </section>
   <section id="about-section">
-    <div id="about-content-container">
-      <div id="about-heading">{{ aboutTitle }}</div>
-      <div id="about-content">
-        <div id="about-left">
-          <div id="about-subheading">
-            {{ aboutSubheadingText }}
+    <div class="section-content">
+      <div id="about-content-container">
+        <div id="about-heading">{{ aboutTitle }}</div>
+        <div id="about-content">
+          <div id="about-left">
+            <div id="about-subheading">
+              {{ aboutSubheadingText }}
+            </div>
           </div>
-        </div>
-        <div id="about-right">
-          <div id="image-outer">
-            <img id="about-photo" alt="Jack Collis Picture" src="../assets/myphotoupscaled.jpg">
+          <div id="about-right">
+            <div id="image-outer">
+              <img id="about-photo" alt="Jack Collis Picture" src="../assets/myphotoupscaled.jpg">
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
   <section id="projects-section">
-    <div class="absolute-title">{{ projectsTitle }}</div>
-    <div id="projects-section-inner">
-      <ProjectList />
+    <div class="section-content">
+      <div class="absolute-title">{{ projectsTitle }}</div>
+      <div id="projects-section-inner">
+        <ProjectList />
+      </div>
     </div>
   </section>
   <img id="scroll-button-up" class="scroll-button hide" alt="Scroll Up"
@@ -137,6 +147,12 @@ export default defineComponent({
   position: relative;
   min-height: 100vh;
   overflow: hidden;
+}
+
+.section-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: clamp(100px, 10%, 200px) 12%;
 }
 
 #landing-section {
@@ -215,7 +231,7 @@ export default defineComponent({
 #about-heading {
   font-size: 3rem;
   font-weight: bold;
-  margin: 0 0 50px 0;
+  margin: 0 auto 50px 0;
 }
 
 #about-subheading {
@@ -228,8 +244,6 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin: 100px;
-  min-width: 500px;
 }
 
 #about-content {
@@ -238,7 +252,6 @@ export default defineComponent({
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  max-width: 100vw;
 }
 
 #about-photo {
@@ -253,7 +266,7 @@ export default defineComponent({
 
 #projects-section-inner {
   align-items: unset;
-  padding: 50vh 10% 0 10%;
+  padding: 20% 0 0 0;
   flex-direction: column;
   width: 100%;
 }
@@ -263,12 +276,11 @@ export default defineComponent({
   font-weight: bold;
   margin: 0 0 50px 0;
   position: absolute;
-  top: 25vh;
 }
 
 #social-container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   margin-top: 1rem;
 }
@@ -289,6 +301,12 @@ export default defineComponent({
 @media screen and (max-width: 1000px) {
   #about-content {
     flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #projects-section-inner {
+    padding: 100px 0 0 0;
   }
 }
 </style>
