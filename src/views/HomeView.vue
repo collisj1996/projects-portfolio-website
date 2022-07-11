@@ -11,7 +11,11 @@ export default defineComponent({
     const state = reactive({
       landingSubheadingText: 'Full Stack Web Developer' as string,
       aboutTitle: 'About' as string,
-      aboutSubheadingText: 'I\'m a career-driven and personable individual always looking to develop my portfolio of skills and experience. I have a bachelor\'s degree in Computer Science which has afforded me a solid understanding of computer theory; building upon this is my years working in the industry which has further developed my understanding into practical skills and knowledge.' as string,
+      aboutSubheadingText: [
+        'I\'m a career-driven and personable individual always looking to develop my portfolio of skills and experience.',
+        `I have a bachelor's degree in Computer Science which has afforded me a solid understanding of computer theory; building upon
+        this is my years working in the industry which has further developed my understanding into practical skills and knowledge.`,
+      ] as string[],
       projectsTitle: 'Projects' as string,
       upTargetOffset: 0 as number,
       downTargetOffset: 0 as number,
@@ -125,7 +129,10 @@ export default defineComponent({
         <div id="about-content">
           <div id="about-left">
             <div id="about-subheading">
-              {{ aboutSubheadingText }}
+              <div class="about-paragraph" v-for="(paragraph, index) of aboutSubheadingText"
+                :key="index">
+                {{ paragraph }}
+              </div>
             </div>
           </div>
           <div id="about-right">
@@ -220,7 +227,7 @@ export default defineComponent({
 }
 
 #about-section {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
 }
 
 #about-left {
@@ -273,7 +280,7 @@ export default defineComponent({
 }
 
 #projects-section {
-  background-color: var(--tertiary-color);
+  background-color: var(--primary-color);
 }
 
 #projects-section-inner {
@@ -308,6 +315,10 @@ export default defineComponent({
 
 .hide-scroll-button {
   display: none;
+}
+
+.about-paragraph {
+  margin: 0 0 2rem 0;
 }
 
 @media screen and (max-width: 1000px) {

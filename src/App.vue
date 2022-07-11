@@ -32,9 +32,9 @@ export default defineComponent({
 }
 
 :root {
-  --primary-color: #b7e4c7;
-  --secondary-color: #95d5b2;
-  --tertiary-color: #74c69d;
+  --primary-color: rgb(229, 232, 247);
+  --secondary-color: rgb(219, 255, 219);
+  --tertiary-color: rgb(219, 219, 255);
 }
 
 * {
