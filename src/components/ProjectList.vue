@@ -58,7 +58,7 @@ export default defineComponent({
             pick up this project again.`],
           image: 'msh.png',
           githubLink: 'https://github.com/collisj1996/minecraft-server-hub-frontend',
-          demoLink: '',
+          demoLink: 'https://minecraftserverhub.com/',
           pageLink: '',
           status: ProjectStatus.Finished,
           tags: ['JavaScript', 'Vue 2', 'Vuex', 'Full Stack', 'Serverless', 'AWS', 'MySQL', 'SQS', 'EC2', 'NodeJS', 'Lambda', 'RDS'],
