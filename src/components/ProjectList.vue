@@ -31,7 +31,7 @@ export default defineComponent({
           ],
           image: 'algo-sandbox.png',
           githubLink: 'https://github.com/collisj1996/algo-sandbox',
-          demoLink: '',
+          demoLink: 'https://collisj1996.github.io/algo-sandbox/',
           pageLink: '',
           status: ProjectStatus.Ongoing,
           tags: ['JavaScript', 'TypeScript', 'Vue 3', 'Composition API', 'Alogrithms', 'Pathfinding', 'Visualization'],
